@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esta — Sitemap</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f3f4f6;
+      color: #1f2937;
+      margin: 0;
+      padding: 24px 16px;
+    }
+    .card {
+      max-width: 850px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 2px solid #f3f4f6;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+    h1 { margin: 0; font-size: 26px; color: #111827; }
+    h1 span { color: #4f46e5; }
+    .badge {
+      background: #eef2ff;
+      color: #4f46e5;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left;
+      padding: 12px 12px;
+      background: #f9fafb;
+      color: #6b7280;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    td { padding: 14px 12px; border-bottom: 1px solid #f3f4f6; font-size: 15px; }
+    .page-title { font-weight: 600; color: #111827; margin-bottom: 4px; }
+    td a { color: #4f46e5; text-decoration: none; font-size: 13px; word-break: break-all; }
+    .pill {
+      background: #f3f4f6;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .date { color: #6b7280; font-size: 13px; white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <h1><span>Esta</span> — Sitemap</h1>
+      <div class="badge" id="pageCount">Нийт 0 хуудас</div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Хуудас &amp; Линк</th>
+          <th>Зэрэг</th>
+          <th>Огноо</th>
+        </tr>
+      </thead>
+      <tbody id="sitemapBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const DOMAIN = 'https://esta.mn';
+    const pages = [
+      { title: 'Нүүр хуудас', path: '/', lastmod: '2026-11-24', priority: '1.0' },
+      { title: 'Бидний тухай', path: '/about', lastmod: '2026-11-20', priority: '0.8' },
+      { title: 'Үйлчилгээ', path: '/services', lastmod: '2026-11-22', priority: '0.8' },
+      { title: 'Бүтээгдэхүүн', path: '/products', lastmod: '2026-11-23', priority: '0.9' },
+      { title: 'Холбоо барих', path: '/contact', lastmod: '2026-11-15', priority: '0.5' }
+    ];
+
+    const tbody = document.getElementById('sitemapBody');
+    const badge = document.getElementById('pageCount');
+    badge.textContent = Нийт ${pages.length} хуудас;
+
+    tbody.innerHTML = pages.map(p => `
+      <tr>
+        <td>
+          <div class="page-title">${p.title}</div>
+          <a href="${DOMAIN}${p.path}" target="_blank">${DOMAIN}${p.path}</a>
+        </td>
+        <td><span class="pill">${p.priority}</span></td>
+        <td class="date">${p.lastmod}</td>
+      </tr>
+    `).join('');
+  </script>
+</body>
+</html>
+Compose
+Write to Anand Anand
