@@ -14,7 +14,7 @@
       padding: 24px 16px;
     }
     .card {
-      max-width: 850px;
+      max-width: 900px;
       margin: 0 auto;
       background: #ffffff;
       border-radius: 16px;
@@ -29,7 +29,7 @@
       gap: 10px;
       border-bottom: 2px solid #f3f4f6;
       padding-bottom: 16px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
     h1 { margin: 0; font-size: 26px; color: #111827; }
     h1 span { color: #4f46e5; }
@@ -39,6 +39,64 @@
       padding: 6px 14px;
       border-radius: 20px;
       font-size: 13px;
+      font-weight: 600;
+    }
+    .diagram-box {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 28px;
+    }
+    .diagram-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 16px;
+    }
+    .tree {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+    .root-node {
+      background: #4f46e5;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.25);
+    }
+    .root-node small {
+      display: block;
+      font-weight: 400;
+      opacity: 0.9;
+      margin-top: 3px;
+    }
+    .children-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+      width: 100%;
+    }
+    .child-node {
+      background: #ffffff;
+      border: 1.5px solid #c7d2fe;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+    .child-node strong {
+      display: block;
+      color: #111827;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .child-node span {
+      font-size: 12px;
+      color: #4f46e5;
       font-weight: 600;
     }
     table { width: 100%; border-collapse: collapse; }
@@ -67,8 +125,20 @@
   <div class="card">
     <div class="header">
       <h1><span>Esta</span> — Sitemap</h1>
-      <div class="badge" id="pageCount">Нийт 0 хуудас</div>
+      <div class="badge" id="pageCount">Нийт 5 хуудас</div>
     </div>
+
+    <div class="diagram-box">
+      <div class="diagram-title">Хуудсуудын бүтцийн зураглал (Sitemap Tree)</div>
+      <div class="tree">
+        <div class="root-node">
+          Нүүр хуудас (/)
+          <small>https://esta.mn/</small>
+        </div>
+        <div class="children-grid" id="treeChildren"></div>
+      </div>
+    </div>
+
     <table>
       <thead>
         <tr>
@@ -77,34 +147,53 @@
           <th>Огноо</th>
         </tr>
       </thead>
-      <tbody id="sitemapBody"></tbody>
+      <tbody id="sitemapBody">
+        <tr>
+          <td><div class="page-title">Нүүр хуудас</div><a href="https://esta.mn/" target="_blank">https://esta.mn/</a></td>
+          <td><span class="pill">1.0</span></td>
+          <td class="date">2026-11-24</td>
+        </tr>
+        <tr>
+          <td><div class="page-title">Бидний тухай</div><a href="https://esta.mn/about" target="_blank">https://esta.mn/about</a></td>
+          <td><span class="pill">0.8</span></td>
+          <td class="date">2026-11-20</td>
+        </tr>
+        <tr>
+          <td><div class="page-title">Үйлчилгээ</div><a href="https://esta.mn/services" target="_blank">https://esta.mn/services</a></td>
+          <td><span class="pill">0.8</span></td>
+          <td class="date">2026-11-22</td>
+        </tr>
+        <tr>
+          <td><div class="page-title">Бүтээгдэхүүн</div><a href="https://esta.mn/products" target="_blank">https://esta.mn/products</a></td>
+          <td><span class="pill">0.9</span></td>
+          <td class="date">2026-11-23</td>
+        </tr>
+        <tr>
+          <td><div class="page-title">Холбоо барих</div><a href="https://esta.mn/contact" target="_blank">https://esta.mn/contact</a></td>
+          <td><span class="pill">0.5</span></td>
+          <td class="date">2026-11-15</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 
   <script>
-    const DOMAIN = 'https://esta.mn';
-    const pages = [
-      { title: 'Нүүр хуудас', path: '/', lastmod: '2026-11-24', priority: '1.0' },
-      { title: 'Бидний тухай', path: '/about', lastmod: '2026-11-20', priority: '0.8' },
-      { title: 'Үйлчилгээ', path: '/services', lastmod: '2026-11-22', priority: '0.8' },
-      { title: 'Бүтээгдэхүүн', path: '/products', lastmod: '2026-11-23', priority: '0.9' },
-      { title: 'Холбоо барих', path: '/contact', lastmod: '2026-11-15', priority: '0.5' }
+    const subPages = [
+      { title: 'Бидний тухай', path: '/about' },
+      { title: 'Үйлчилгээ', path: '/services' },
+      { title: 'Бүтээгдэхүүн', path: '/products' },
+      { title: 'Холбоо барих', path: '/contact' }
     ];
 
-    const tbody = document.getElementById('sitemapBody');
-    const badge = document.getElementById('pageCount');
-    badge.textContent = Нийт ${pages.length} хуудас;
-
-    tbody.innerHTML = pages.map(p => `
-      <tr>
-        <td>
-          <div class="page-title">${p.title}</div>
-          <a href="${DOMAIN}${p.path}" target="_blank">${DOMAIN}${p.path}</a>
-        </td>
-        <td><span class="pill">${p.priority}</span></td>
-        <td class="date">${p.lastmod}</td>
-      </tr>
-    `).join('');
+    const treeChildren = document.getElementById('treeChildren');
+    if (treeChildren) {
+      treeChildren.innerHTML = subPages.map(p => `
+        <div class="child-node">
+          <strong>${p.title}</strong>
+          <span>${p.path}</span>
+        </div>
+      `).join('');
+    }
   </script>
 </body>
 </html>
